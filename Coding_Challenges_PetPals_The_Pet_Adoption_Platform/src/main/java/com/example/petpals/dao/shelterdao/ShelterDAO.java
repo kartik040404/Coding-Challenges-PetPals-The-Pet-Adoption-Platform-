@@ -10,4 +10,5 @@ public interface ShelterDAO {
     void addShelter(Shelter shelter) throws SQLException, ClassNotFoundException;
     void removeShelter(int shelterID) throws SQLException, ClassNotFoundException;
     List<Shelter> showShelter() throws SQLException, ClassNotFoundException;
+    Shelter searchShelterByID(int shelterID) throws SQLException, ClassNotFoundException;
 }

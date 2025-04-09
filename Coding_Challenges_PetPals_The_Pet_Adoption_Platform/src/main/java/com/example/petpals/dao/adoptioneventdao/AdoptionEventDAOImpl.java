@@ -1,6 +1,7 @@
 package com.example.petpals.dao.adoptioneventdao;
 
 import com.example.petpals.model.AdoptionEvent;
+import com.example.petpals.model.Donation;
 import com.example.petpals.model.Pet;
 import com.example.petpals.util.ConnectionHelper;
 
@@ -67,5 +68,26 @@ public class AdoptionEventDAOImpl implements AdoptionEventDAO{
         connection.close();
         preparedStatement.close();
         return adoptionEventList;
+    }
+
+    @Override
+    public AdoptionEvent searchAdoptionEventByID(int adoptionEventID) throws SQLException, ClassNotFoundException, ParseException {
+            connection=ConnectionHelper.getConnection();
+            String stmt="Select * from adoptionevents where eventid=?";
+            preparedStatement=connection.prepareStatement(stmt);
+            preparedStatement.setInt(1,adoptionEventID);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            AdoptionEvent adoptionEvent=null;
+            if(resultSet.next()){
+                adoptionEvent=new AdoptionEvent();
+                adoptionEvent.setEventID(resultSet.getInt("eventid"));
+                adoptionEvent.setEventName(resultSet.getString("eventname"));
+                adoptionEvent.setEventDate(sdf.parse(resultSet.getString("eventdate")));
+                adoptionEvent.setLocation(resultSet.getString("location"));
+            }
+            connection.close();
+            preparedStatement.close();
+            return adoptionEvent;
+
     }
 }

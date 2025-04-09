@@ -2,6 +2,7 @@ package com.example.petpals.dao.donationdao;
 
 import com.example.petpals.model.Donation;
 import com.example.petpals.model.Pet;
+import com.example.petpals.model.Shelter;
 import com.example.petpals.util.ConnectionHelper;
 
 import java.sql.Connection;
@@ -71,5 +72,26 @@ public class DonationDAOImpl implements DonationDAO{
         connection.close();
         preparedStatement.close();
         return donationList;
+    }
+
+    @Override
+    public Donation searchDonationByID(int donationID) throws SQLException, ClassNotFoundException {
+        connection=ConnectionHelper.getConnection();
+        String stmt="Select * from donations where donationid=?";
+        preparedStatement=connection.prepareStatement(stmt);
+        preparedStatement.setInt(1,donationID);
+        ResultSet resultSet=preparedStatement.executeQuery();
+        Donation donation=null;
+        if(resultSet.next()){
+            donation=new Donation();
+            donation.setDonationid(resultSet.getInt("donationid"));
+            donation.setDonorname(resultSet.getString("donorname"));
+            donation.setDonationtype(resultSet.getString("donationtype"));
+            donation.setDonationamount(resultSet.getDouble("donationamount"));
+            donation.setDonationitem(resultSet.getString("donationitem"));
+        }
+        connection.close();
+        preparedStatement.close();
+        return donation;
     }
 }

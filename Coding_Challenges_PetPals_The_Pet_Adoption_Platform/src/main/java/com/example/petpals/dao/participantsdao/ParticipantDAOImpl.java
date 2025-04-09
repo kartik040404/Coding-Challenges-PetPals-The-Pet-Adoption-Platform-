@@ -1,5 +1,6 @@
 package com.example.petpals.dao.participantsdao;
 
+import com.example.petpals.model.Donation;
 import com.example.petpals.model.Participants;
 import com.example.petpals.model.Pet;
 import com.example.petpals.util.ConnectionHelper;
@@ -32,7 +33,7 @@ public class ParticipantDAOImpl implements ParticipantDAO{
 
     @Override
     public void removeParticipant(int participantID) throws SQLException, ClassNotFoundException {
-        String stmt="Delete from participants";
+        String stmt="Delete from participants where participantid=?";
         connection=ConnectionHelper.getConnection();
         preparedStatement=connection.prepareStatement(stmt);
         preparedStatement.setInt(1,participantID);
@@ -63,5 +64,25 @@ public class ParticipantDAOImpl implements ParticipantDAO{
         connection.close();
         preparedStatement.close();
         return participantsList;
+    }
+
+    @Override
+    public Participants searchParticipantByID(int participantID) throws SQLException, ClassNotFoundException {
+        connection=ConnectionHelper.getConnection();
+        String stmt="Select * from participants where participantid=?";
+        preparedStatement=connection.prepareStatement(stmt);
+        preparedStatement.setInt(1,participantID);
+        ResultSet resultSet=preparedStatement.executeQuery();
+        Participants participants=null;
+        if(resultSet.next()){
+            participants=new Participants();
+            participants.setParticipantID(resultSet.getInt("participantid"));
+            participants.setParticipantName(resultSet.getString("participantname"));
+            participants.setParticipantType(resultSet.getString("participanttype"));
+            participants.setEventID(resultSet.getInt("eventid"));
+        }
+        connection.close();
+        preparedStatement.close();
+        return participants;
     }
 }

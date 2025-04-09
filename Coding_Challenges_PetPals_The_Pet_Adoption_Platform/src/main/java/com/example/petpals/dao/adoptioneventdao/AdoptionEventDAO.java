@@ -10,4 +10,6 @@ public interface AdoptionEventDAO {
     void addAdoptionEvent(AdoptionEvent adoptionEvent) throws SQLException, ClassNotFoundException;
     void removeAdoptionEvent(int adoptionEventID) throws SQLException, ClassNotFoundException;
     List<AdoptionEvent> showAdoptionEvent() throws SQLException, ClassNotFoundException, ParseException;
+    AdoptionEvent searchAdoptionEventByID(int adoptionEventID) throws SQLException, ClassNotFoundException, ParseException;
+
 }
