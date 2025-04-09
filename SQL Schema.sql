@@ -1,17 +1,17 @@
 -- 1. create and use database
 create database if not exists pet_adoption;
 use pet_adoption;
-
+drop database pet_adoption;
 -- 2. create table for shelters
 create table if not exists shelters (
-    shelterid int primary key,
+    shelterid int primary key auto_increment,
     name varchar(255),
     location varchar(255)
 );
 
 -- 3. create table for pets
 create table if not exists pets (
-    petid int primary key,
+    petid int primary key auto_increment,
     name varchar(255),
     age int,
     breed varchar(255),
@@ -23,7 +23,7 @@ create table if not exists pets (
 
 -- 4. create table for donations
 create table if not exists donations (
-    donationid int primary key,
+    donationid int primary key auto_increment,
     donorname varchar(255),
     donationtype varchar(50),
     donationamount decimal(10,2),
@@ -33,17 +33,15 @@ create table if not exists donations (
 
 -- 5. create table for adoption events
 create table if not exists adoptionevents (
-    eventid int primary key,
+    eventid int primary key auto_increment,
     eventname varchar(255),
     eventdate datetime,
-    location varchar(255),
-    petid int,
-    foreign key (petid) references pets(petid)
+    location varchar(255)
 );
 
 -- 6. create table for participants
 create table if not exists participants (
-    participantid int primary key,
+    participantid int primary key auto_increment,
     participantname varchar(255),
     participanttype varchar(50),
     eventid int,
@@ -121,3 +119,5 @@ insert into shelters (shelterid, name, location) values
 (10, 'second chance shelter', '707 fir ave, eastside');
 
 select * from shelters;
+
+show tables;
