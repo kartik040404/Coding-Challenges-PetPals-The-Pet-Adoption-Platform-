@@ -19,7 +19,7 @@ public class DonationBal {
     static {
         donationDAO=new DonationDAOImpl();
     }
-    public boolean checkDonationID(int donationID) throws SQLException, ClassNotFoundException, DetailsNotFoundException {
+    public boolean checkDonationID(int donationID) throws SQLException, ClassNotFoundException, DetailsNotFoundException, ParseException {
         if(donationDAO.searchDonationByID(donationID)==null){
             throw new DetailsNotFoundException("Donation Details not Found");
         }
@@ -28,7 +28,7 @@ public class DonationBal {
     public void addDonationBal(Donation donation) throws SQLException, ClassNotFoundException {
         donationDAO.addDonation(donation);
     }
-    public void removeDonationBal(int donationID) throws SQLException, ClassNotFoundException, DetailsNotFoundException {
+    public void removeDonationBal(int donationID) throws SQLException, ClassNotFoundException, DetailsNotFoundException, ParseException {
         if(checkDonationID(donationID)){
         donationDAO.removeDonation(donationID);
         }
@@ -37,7 +37,7 @@ public class DonationBal {
     public List<Donation> showDonationBal() throws SQLException, ClassNotFoundException, ParseException {
         return donationDAO.showDonation();
 }
-    public Donation searchDonationByODBal(int donationID) throws SQLException, ClassNotFoundException, DetailsNotFoundException {
+    public Donation searchDonationByODBal(int donationID) throws SQLException, ClassNotFoundException, DetailsNotFoundException, ParseException {
         Donation donation=donationDAO.searchDonationByID(donationID);
         if(donation==null){
             throw new DetailsNotFoundException("Donation ID not Found");

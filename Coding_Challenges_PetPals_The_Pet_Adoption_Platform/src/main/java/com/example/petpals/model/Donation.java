@@ -15,4 +15,5 @@ public class Donation {
     private double donationamount;
     private String donationitem;
     private Date donationdate;
+
 }

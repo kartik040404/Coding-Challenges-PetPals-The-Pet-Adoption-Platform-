@@ -65,7 +65,6 @@ public class DonationDAOImpl implements DonationDAO{
             donation.setDonationtype(resultSet.getString("donationtype"));
             donation.setDonationamount(resultSet.getDouble("donationamount"));
             donation.setDonationitem(resultSet.getString("donationitem"));
-
             donation.setDonationdate(sdf.parse(resultSet.getString("donationdate")));
             donationList.add(donation);
         }
@@ -75,7 +74,7 @@ public class DonationDAOImpl implements DonationDAO{
     }
 
     @Override
-    public Donation searchDonationByID(int donationID) throws SQLException, ClassNotFoundException {
+    public Donation searchDonationByID(int donationID) throws SQLException, ClassNotFoundException, ParseException {
         connection=ConnectionHelper.getConnection();
         String stmt="Select * from donations where donationid=?";
         preparedStatement=connection.prepareStatement(stmt);
@@ -89,6 +88,7 @@ public class DonationDAOImpl implements DonationDAO{
             donation.setDonationtype(resultSet.getString("donationtype"));
             donation.setDonationamount(resultSet.getDouble("donationamount"));
             donation.setDonationitem(resultSet.getString("donationitem"));
+            donation.setDonationdate(sdf.parse(resultSet.getString("donationdate")));
         }
         connection.close();
         preparedStatement.close();
